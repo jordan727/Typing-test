@@ -1,0 +1,53 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta http-equiv="X-UA-Compatible" content="IE=edge">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Typing Test</title>
+    <link rel="stylesheet" href="css/style.css">
+</head>
+<body>
+    <!-- Header -->
+    <div class="header">
+        <div class="title">
+            Title
+        </div>
+        <div class="account">
+            <button class="profile"><img class="avatar" src="img/placeholderpfp.png" alt="Avatar"></button>    
+            <div class="account-content">
+                <a href="account.html">Edit Profile</a>
+                <a href="stats.html">View Statistics</a>
+            </div>
+        </div>
+    </div>
+
+    <!-- Body -->
+    <div class="game-area">
+        <div class="stats">
+            <div class="timer">
+                <div class="statText">Time</div>
+            </div>
+            <div class ="accuracy">
+                <div class="statText">Accuracy</div>
+            </div>
+        </div>
+        <div id="words">
+            test
+        </div>
+        <div class="inputText">
+        <textarea id="inputarea" placeholder="" oninput="checkCurrentText()" onfocus="startGame()"></textarea>
+        </div>
+        <button class="restartBtn"
+            onclick="resetValues()">
+            Restart
+        </button>"
+    </div>
+
+    <!-- Load Javascript -->
+    <script src="js/word-list.js"></script>
+    <script src="js/random-library.js"></script>
+    <script src="js/spell-check.js"></script>
+    <script src="js/main.js"></script>
+</body>
+</html>
