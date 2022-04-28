@@ -4,63 +4,57 @@
 // https://www.geeksforgeeks.org/design-a-typing-speed-test-game-using-javascript/
 //Show only a certain number of random words, generate new line of random words after line finishes
 // Random words used
-let wordArray = [];
 
-let timeLimit = 60;
-
+let timeLimit = 30;
 
 let inputArea = document.getElementById("inputarea");
 
-
+let wordArray = [];
 let timeLeft = timeLimit;
 let timeElapsed = 0;
 let totalErrors = 0;
 let errors = 0;
 let accuracy = 0;
-let characterTyped = 0;
-let currentWords = "";
-let x = 0;
+let lettersTyped = 0;
+let wordString = "";
 let timer = null;
 
-updateWords()
+
 // add 100 random words to array
 function updateWords() {
-    for (let n = 0; n < 100; n++) {
-        wordArray.push(randomWord())
+    if (wordArray.length < 100) {
+        for (let n = 0; n < 100; n++) {
+            wordArray.push(randomWord())
+        }
+    } else if (wordArray.length >= 100) {
+        console.log('worked')
     }
-// Split array, allows change colour of each letter when typed
-    wordArray.split('').forEach(char => {
-        const charSpan = document.createElement('span')
-        charSpan.innerText = char
-    })
+    // Split word array
+    wordString = wordArray.join(" ");
+    document.getElementById("words").innerHTML = wordString
 }
 
-// Display words as string
-currentWords = wordArray.join(" ");
-document.getElementById("words").innerHTML = currentWords
-
-// document.addEventListener("input", wordChangeListener())
-
-// function wordChangeListener() {
-//     console.log("worked");
-// }
 
 // turn typed text into array, split into letters, compare to random word array split into letters
-function checkCurrentText() {
+function matchText() {
     currentInput = inputArea.value;
     currentInputArray = currentInput.split('');
+    // compare split input and word arrays together and change colour of text depending if correct or not
+    
+}
+
+function updateTimer() {
+
+}
+
+function endGame() {
+
 }
 
 function startGame() {
+    updateWords()
+}
+
+function reset() {
 
 }
-// try using charAt() or includes()
-
-// word.onkeyup = wordCheck()
-
-// function wordCheck() {
-//     let wordTyped = document.getElementById("typebox").value
-//     if (wordTyped == wordArray[0]){
-//         return "correct"
-//     }
-// }

@@ -10,33 +10,34 @@
 <body>
     <!-- Header -->
     <div class="header">
-        <div class="title">
-            Title
+      <div class="title">
+        Title
+      </div>
+      <div class="account">
+        <button class="profile"><img class="avatar" src="img/placeholderpfp.png" alt="Avatar"></button>    
+        <div class="account-content">
+          <a href="account.html">Edit Profile</a>
+          <a href="stats.html">View Statistics</a>
         </div>
-        <div class="account">
-            <button class="profile"><img class="avatar" src="img/placeholderpfp.png" alt="Avatar"></button>    
-            <div class="account-content">
-                <a href="account.html">Edit Profile</a>
-                <a href="stats.html">View Statistics</a>
-            </div>
-        </div>
+      </div>
     </div>
 
     <!-- Body -->
-    <div class="game-area">
+    <div class="gamespace">
         <div class="stats">
-            <div class="timer">
-                <div class="statText">Time</div>
-            </div>
-            <div class ="accuracy">
-                <div class="statText">Accuracy</div>
-            </div>
+          <div class="timer">
+            <div class="currTime">30s</div>
+          </div>
+          <div class="accuracy">
+            <div class="currAccuracy">100%</div>
+          </div>
         </div>
+
         <div id="words">
             test
         </div>
         <div class="inputText">
-        <textarea id="inputarea" placeholder="" oninput="checkCurrentText()" onfocus="startGame()"></textarea>
+        <textarea id="inputarea" placeholder="" oninput="matchText()" onfocus="startGame()"></textarea>
         </div>
         <button class="restartBtn"
             onclick="resetValues()">
