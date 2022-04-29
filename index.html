@@ -24,25 +24,19 @@
 
     <!-- Body -->
     <div class="gamespace">
-        <div class="stats">
           <div class="timer">
             <div class="currTime">30s</div>
           </div>
-          <div class="accuracy">
-            <div class="currAccuracy">100%</div>
-          </div>
-        </div>
 
         <div id="words">
-            test
         </div>
         <div class="inputText">
-        <textarea id="inputarea" placeholder="" oninput="matchText()" onfocus="startGame()"></textarea>
+        <textarea id="inputarea" oninput="matchText()"></textarea>
         </div>
         <button class="restartBtn"
             onclick="resetValues()">
             Restart
-        </button>"
+        </button>
     </div>
 
     <!-- Load Javascript -->
