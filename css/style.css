@@ -73,17 +73,25 @@ body {
 /* Random text */
 #words {
   font-family: monospace;
-  font-size: 20px;
+  font-size: 25px;
   color: grey;
   padding: 90px;
+  padding-top: 200px;
+  max-width: auto;
+  /* max-height: 300px; */
+  /* display: -webkit-box; */
   position: absolute;
+  overflow: hidden;
+  /* text-overflow: ellipsis; */
+  /* -webkit-line-clamp: 1;
+  -webkit-box-orient: vertical; */
 }
 
 #inputarea {
   opacity: 0;
 }
 
-.currTime {
+#currTime {
   position: absolute;
   font-family: monospace;
   font-size: 30px;
