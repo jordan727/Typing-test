@@ -28,7 +28,8 @@ let errors = 0;
 let accuracy = 0;
 let wordString = "";
 let timer = null;
-let misstyped = ""
+let misstyped = []
+let wordsTyped = 0;
 
 updateWords()
 document.addEventListener("keydown", startGame)
@@ -53,6 +54,7 @@ function updateWords() {
 
     // Split words for css
     wordString = wordArray.join(" ");
+    // Split word string into individual letters and seperate them into span elements
     wordString.split('').forEach(char => {
         const charSpan = document.createElement('span')
         charSpan.innerText = char
@@ -65,6 +67,7 @@ function updateWords() {
 function matchText() {
     currentInput = inputArea.value;
     currentInputArray = currentInput.split('');
+    currentWordsTyped = currentInput.split(' ');
 
     wordSpanArray = wordText.querySelectorAll('span');
     wordSpanArray.forEach((char, index) => {
@@ -84,17 +87,14 @@ function matchText() {
             char.classList.add('incorrect');
             char.classList.remove('correct');
             errors++;
-            if (char.innerText === " ") {
-                misstyped = typedChar;
-                const missType = document.createElement('p')
-                missType.innerHTML = misstyped
-                wordText.appendChild(missType) 
-
-            }
           }
-    
     })
 
+    // Check if word is spelt correcty, count amount of words correctly typed (scuffed)
+    if (currentWordsTyped[wordsTyped] == wordArray[wordsTyped] || currentWordsTyped.length > wordsTyped + 1) {
+        console.log("correct");
+        wordsTyped++
+    }
 }
 
 function updateTimer() {
