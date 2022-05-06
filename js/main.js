@@ -16,6 +16,7 @@
 // Only show 3 - 4 lines at a time getClientRects()
 let timeLimit = 30;
 
+let timerText = document.querySelector("#currTime");
 let wordText = document.querySelector("#words")
 
 let inputArea = document.getElementById("inputarea");
@@ -30,14 +31,24 @@ let wordString = "";
 let timer = null;
 let misstyped = []
 let wordsTyped = 0;
+let charactersTyped = 0;
+let correctChars = 0;
 
 updateWords()
-document.addEventListener("keydown", startGame)
+document.addEventListener("keydown", focus);
+
+function focus() {
+    inputArea.focus()
+}
 
 function startGame() {
     reset()
-    inputArea.focus()
+
+    clearInterval(timer);
+    timer = setInterval(updateTimer, 1000)
+    console.log("game started")
 }
+
 
 // add 100 random words to array
 function updateWords() {
@@ -68,7 +79,9 @@ function matchText() {
     currentInput = inputArea.value;
     currentInputArray = currentInput.split('');
     currentWordsTyped = currentInput.split(' ');
-
+    charactersTyped++
+    correctChars = charactersTyped - errors
+    console.log(correctChars)
     wordSpanArray = wordText.querySelectorAll('span');
     wordSpanArray.forEach((char, index) => {
         let typedChar = currentInputArray[index]
@@ -90,18 +103,30 @@ function matchText() {
           }
     })
 
-    // Check if word is spelt correcty, count amount of words correctly typed (scuffed)
-    if (currentWordsTyped[wordsTyped] == wordArray[wordsTyped] || currentWordsTyped.length > wordsTyped + 1) {
-        console.log("correct");
+    // Check if word is spelt correcty, count amount of words correctly typed
+    if (currentWordsTyped[wordsTyped] == wordArray[wordsTyped]) {
         wordsTyped++
+    }   else if (currentWordsTyped[wordsTyped] == "") {
+        currentWordsTyped.pop()
     }
 }
 
 function updateTimer() {
-
+    if (timeLeft > 0) {
+        timeLeft--;
+        timeElapsed++;
+        timerText.textContent = timeLeft + "s";
+    }   else {
+        endGame();
+    }
 }
 
 function endGame() {
+    clearInterval(timer);
+    inputArea.disabled = true;
+    console.log("game fiished");
+    let WPM = Math.round(((correctChars / 5) / (timeLimit / 60)));
+    console.log(WPM)
 }
 
 function reset() {
