@@ -4,9 +4,6 @@
 // https://www.geeksforgeeks.org/design-a-typing-speed-test-game-using-javascript/ (color typing stuff)
 //Show only a certain number of random words, generate new line of random words after line finishes
 // Random words used
-
-
-
 // Add line that shows where you are typing
 // Spaces go to next word
 // backspace does not work if you correctly typed the word
@@ -14,16 +11,12 @@
 // underline mistyped words
 // When line is typed display next line
 // Only show 3 - 4 lines at a time getClientRects()
-let timeLimit = 30;
-
 let timerText = document.querySelector("#currTime");
 let wordText = document.querySelector("#words")
-
 let inputArea = document.getElementById("inputarea");
-
+let timeLimit = 30;
 let wordArray = [];
 let timeLeft = timeLimit;
-let timeElapsed = 0;
 let totalErrors = 0;
 let errors = 0;
 let accuracy = 0;
@@ -76,16 +69,19 @@ function updateWords() {
 
 // turn typed text into array, split into letters, compare to random word array split into letters
 function matchText() {
+    // try includes()
     currentInput = inputArea.value;
     currentInputArray = currentInput.split('');
     currentWordsTyped = currentInput.split(' ');
     charactersTyped++
-    correctChars = charactersTyped - errors
-    console.log(correctChars)
+    // correctChars = charactersTyped - errors
+    // console.log(correctChars)
+    errors = 0
     wordSpanArray = wordText.querySelectorAll('span');
     wordSpanArray.forEach((char, index) => {
         let typedChar = currentInputArray[index]
-
+        // try concat() Split array if misstyped on a space, insert all misstyped letters in between the split arrays and display it
+        // Change classes of random words depending on if there is words typed, if the word typed is correct or incorrect
         if (typedChar == null) {
             char.classList.remove('correct');
             char.classList.remove('incorrect');
@@ -104,19 +100,18 @@ function matchText() {
     })
 
     // Check if word is spelt correcty, count amount of words correctly typed
-    if (currentWordsTyped[wordsTyped] == wordArray[wordsTyped]) {
-        wordsTyped++
-    }   else if (currentWordsTyped[wordsTyped] == "") {
-        currentWordsTyped.pop()
-    }
+    // if (currentWordsTyped[wordsTyped] == wordArray[wordsTyped]) {
+    //     wordsTyped++
+    // }   else if (currentWordsTyped[wordsTyped] == "") {
+    //     currentWordsTyped.pop()
+    // }
 }
 
 function updateTimer() {
     if (timeLeft > 0) {
         timeLeft--;
-        timeElapsed++;
         timerText.textContent = timeLeft + "s";
-    }   else {
+    }   else if (timeLeft <= 0) {
         endGame();
     }
 }
@@ -125,8 +120,10 @@ function endGame() {
     clearInterval(timer);
     inputArea.disabled = true;
     console.log("game fiished");
-    let WPM = Math.round(((correctChars / 5) / (timeLimit / 60)));
-    console.log(WPM)
+    let WPM = Math.round(((charactersTyped / 5) / (timeLimit / 60)));
+    console.log(WPM);
+    let accuracy = Math.round((charactersTyped - errors) / charactersTyped);
+    console.log(accuracy * 100 + "%");
 }
 
 function reset() {
