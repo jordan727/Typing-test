@@ -25,12 +25,13 @@
     <!-- Body -->
     <div class="gamespace">
           <div class="timer">
-            <div id="currTime">30s</div>
+            <div id="currTime"></div>
           </div>
         <div id="words">
+          Press any key to start
         </div>
         <div class="inputText">
-        <textarea id="inputarea" oninput="matchText()" onfocus="startGame()"></textarea>
+        <textarea id="inputarea" oninput="matchText()" onfocus="startGame()" readonly></textarea>
         </div>
         <button class="restartBtn"
             onclick="resetValues()">
@@ -41,7 +42,7 @@
     <!-- Load Javascript -->
     <script src="js/word-list.js"></script>
     <script src="js/random-library.js"></script>
-    <script src="js/spell-check.js"></script>
+    <script src="js/word-functions.js"></script>
     <script src="js/main.js"></script>
 </body>
 </html>

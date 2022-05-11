@@ -14,6 +14,7 @@
 let timerText = document.querySelector("#currTime");
 let wordText = document.querySelector("#words")
 let inputArea = document.getElementById("inputarea");
+
 let timeLimit = 30;
 let wordArray = [];
 let timeLeft = timeLimit;
@@ -22,82 +23,30 @@ let errors = 0;
 let accuracy = 0;
 let wordString = "";
 let timer = null;
-let misstyped = []
-let wordsTyped = 0;
 let charactersTyped = 0;
-let correctChars = 0;
 
-updateWords()
+// EVENT LISTENERS
 document.addEventListener("keydown", focus);
-
-function focus() {
-    inputArea.focus()
-}
 
 function startGame() {
     reset()
-
+    generateRandomWords()
+    splitWordString()
     clearInterval(timer);
     timer = setInterval(updateTimer, 1000)
-    console.log("game started")
+    setTimeout(readOnlyTemp, 10)
 }
 
-
-// add 100 random words to array
-function updateWords() {
-    wordText.textContent = null;
-    if (wordArray.length < 100) {
-        for (let n = 0; n < 100; n++) {
-            wordArray.push(randomWord())
-        }
-    } 
-    
-    // else if (wordArray.length >= 100) {
-    //     console.log('worked') 
-    // }
-
-    // Split words for css
-    wordString = wordArray.join(" ");
-    // Split word string into individual letters and seperate them into span elements
-    wordString.split('').forEach(char => {
-        const charSpan = document.createElement('span')
-        charSpan.innerText = char
-        wordText.appendChild(charSpan)
-    })
-
+function readOnlyTemp() {
+    inputArea.removeAttribute('readonly');
 }
 
 // turn typed text into array, split into letters, compare to random word array split into letters
 function matchText() {
-    // try includes()
-    currentInput = inputArea.value;
-    currentInputArray = currentInput.split('');
-    currentWordsTyped = currentInput.split(' ');
+    splitInput()
+    moveWords()
     charactersTyped++
-    // correctChars = charactersTyped - errors
-    // console.log(correctChars)
     errors = 0
-    wordSpanArray = wordText.querySelectorAll('span');
-    wordSpanArray.forEach((char, index) => {
-        let typedChar = currentInputArray[index]
-        // try concat() Split array if misstyped on a space, insert all misstyped letters in between the split arrays and display it
-        // Change classes of random words depending on if there is words typed, if the word typed is correct or incorrect
-        if (typedChar == null) {
-            char.classList.remove('correct');
-            char.classList.remove('incorrect');
-       
-            // correct character
-          } else if (typedChar === char.innerText) {
-            char.classList.add('correct');
-            char.classList.remove('incorrect');
-       
-            // incorrect character
-          }  else {
-            char.classList.add('incorrect');
-            char.classList.remove('correct');
-            errors++;
-          }
-    })
 }
 
 function updateTimer() {
@@ -110,6 +59,7 @@ function updateTimer() {
 }
 
 function endGame() {
+    inputArea.setAttribute('readonly', true);
     clearInterval(timer);
     inputArea.disabled = true;
     console.log("game fiished");
@@ -120,49 +70,23 @@ function endGame() {
 }
 
 function reset() {
+    inputArea.disabled = false;
+    timerText.innerHTML = timeLimit + "s"
+    wordText.innerHTML = ""
+    inputArea.value = ""
 
-}
+    timeLimit = 30;
+    wordArray = [];
+    timeLeft = timeLimit;
+    totalErrors = 0;
+    errors = 0;
+    accuracy = 0;
+    wordString = "";
+    timer = null;
+    charactersTyped = 0;
+    }
 
 // Helper Functions
-// Generate 100 Random Words
-function generateRandomWords() {
-
+function focus() {
+    inputArea.focus()
 }
-
-// Split word string by letters
-function splitWordString() {
-
-}
-
-// Split input by letters
-function splitInput() {
-
-}
-
-
-
-
-
-
-
-
-// function startStopwatch() {
-//     if (stopTime === false) {
-//         // Get date in milliseconds when stopwatch starts
-//         begin = new Date();
-//         stopwatchInterval = setInterval(updateStopwatch, 1);
-//     }
-// }
-
-// // Update Stopwatch Time
-// function updateStopwatch() {
-//     // get date in milliseconds when stopwatch stops
-//     end = new Date();
-//     // subtract ending and beginning dates to get elapsed date
-//     elapsed = end - begin;
-// }
-
-// function stopStopwatch() {
-//     stopTime = true;
-//     clearTimeout(stopwatchInterval);
-// }
