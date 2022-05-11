@@ -98,13 +98,6 @@ function matchText() {
             errors++;
           }
     })
-
-    // Check if word is spelt correcty, count amount of words correctly typed
-    // if (currentWordsTyped[wordsTyped] == wordArray[wordsTyped]) {
-    //     wordsTyped++
-    // }   else if (currentWordsTyped[wordsTyped] == "") {
-    //     currentWordsTyped.pop()
-    // }
 }
 
 function updateTimer() {
@@ -129,6 +122,29 @@ function endGame() {
 function reset() {
 
 }
+
+// Helper Functions
+// Generate 100 Random Words
+function generateRandomWords() {
+
+}
+
+// Split word string by letters
+function splitWordString() {
+
+}
+
+// Split input by letters
+function splitInput() {
+
+}
+
+
+
+
+
+
+
 
 // function startStopwatch() {
 //     if (stopTime === false) {
