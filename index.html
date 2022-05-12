@@ -11,7 +11,7 @@
     <!-- Header -->
     <div class="header">
       <div class="title">
-        Title
+        Typo
       </div>
       <div class="account">
         <button class="profile"><img class="avatar" src="img/placeholderpfp.png" alt="Avatar"></button>    
@@ -30,8 +30,16 @@
         <div id="words">
           Press any key to start
         </div>
+        <div id="stats">
+          <div id="WPM">
+            WPM
+          </div>
+          <div id="Accuracy">
+            Acc
+          </div>
+        </div>
         <div class="inputText">
-        <textarea id="inputarea" oninput="matchText()" onfocus="startGame()" readonly></textarea>
+        <textarea id="inputarea" oninput="splitInput()" onfocus="typing()" readonly></textarea>
         </div>
         <button class="restartBtn"
             onclick="resetValues()">

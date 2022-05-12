@@ -1,4 +1,4 @@
-// Functions that work with words
+// Functions that work with creating, comparing and styling words
 
 // Generate 100 Random Words
 function generateRandomWords() {
@@ -29,10 +29,14 @@ function splitInput() {
     wordSpanArray = wordText.querySelectorAll('span');
     wordSpanArray.forEach((char, index) => {
         let typedChar = currentInputArray[index]
-        // try concat() Split array if misstyped on a space, insert all misstyped letters in between the split arrays and display it
-        // Change classes of random words depending on if there is words typed, if the word typed is correct or incorrect
         updateColours(typedChar, char)
     })
+    charactersTyped++
+    errors = 0
+    // if (currentInputArray == wordArray) {
+    //     wordArray = []
+    //     generateRandomWords()
+    // }
 }
 
 function updateColours(typedChar, char) {
@@ -51,8 +55,4 @@ function updateColours(typedChar, char) {
         char.classList.remove('correct');
         errors++;
       }
-}
-
-function moveWords() {
-    
 }

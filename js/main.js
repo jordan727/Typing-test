@@ -1,3 +1,5 @@
+// Typing Test
+
 // array of random words
 // user types out words in a certain time period
 // calculate wpm
@@ -18,7 +20,6 @@ let inputArea = document.getElementById("inputarea");
 let timeLimit = 30;
 let wordArray = [];
 let timeLeft = timeLimit;
-let totalErrors = 0;
 let errors = 0;
 let accuracy = 0;
 let wordString = "";
@@ -27,6 +28,15 @@ let charactersTyped = 0;
 
 // EVENT LISTENERS
 document.addEventListener("keydown", focus);
+document.addEventListener("focusout", pause)
+
+function typing() {
+    if (wordString == "") {
+        startGame()
+    } else {
+        resume()
+    }
+}
 
 function startGame() {
     reset()
@@ -37,16 +47,14 @@ function startGame() {
     setTimeout(readOnlyTemp, 10)
 }
 
-function readOnlyTemp() {
-    inputArea.removeAttribute('readonly');
-}
-
-// turn typed text into array, split into letters, compare to random word array split into letters
-function matchText() {
-    splitInput()
-    moveWords()
-    charactersTyped++
-    errors = 0
+function endGame() {
+    inputArea.setAttribute('readonly', true);
+    clearInterval(timer);
+    console.log("game fiished");
+    let WPM = Math.round(((charactersTyped / 5) / (timeLimit / 60)));
+    console.log(WPM);
+    let accuracy = Math.round((charactersTyped - errors) / charactersTyped);
+    console.log(accuracy * 100 + "%");
 }
 
 function updateTimer() {
@@ -58,17 +66,6 @@ function updateTimer() {
     }
 }
 
-function endGame() {
-    inputArea.setAttribute('readonly', true);
-    clearInterval(timer);
-    inputArea.disabled = true;
-    console.log("game fiished");
-    let WPM = Math.round(((charactersTyped / 5) / (timeLimit / 60)));
-    console.log(WPM);
-    let accuracy = Math.round((charactersTyped - errors) / charactersTyped);
-    console.log(accuracy * 100 + "%");
-}
-
 function reset() {
     inputArea.disabled = false;
     timerText.innerHTML = timeLimit + "s"
@@ -78,7 +75,6 @@ function reset() {
     timeLimit = 30;
     wordArray = [];
     timeLeft = timeLimit;
-    totalErrors = 0;
     errors = 0;
     accuracy = 0;
     wordString = "";
@@ -86,7 +82,27 @@ function reset() {
     charactersTyped = 0;
     }
 
-// Helper Functions
+function pause() {
+    clearInterval(timer);
+    inputArea.setAttribute('readonly', true);
+    timerText.classList.add('blur');
+    wordText.classList.add('blur');
+}
+
+function resume() {
+    timer = setInterval(updateTimer, 1000);
+    setTimeout(readOnlyTemp, 10)
+    wordText.classList.remove('blur');
+    timerText.classList.remove('blur');
+}
+
+
+// Change name of function
+function readOnlyTemp() {
+    inputArea.removeAttribute('readonly');
+}
+
+
 function focus() {
     inputArea.focus()
 }
