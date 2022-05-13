@@ -16,6 +16,7 @@
 let timerText = document.querySelector("#currTime");
 let wordText = document.querySelector("#words")
 let inputArea = document.getElementById("inputarea");
+let pauseText = document.querySelector("#gamepause")
 
 let timeLimit = 30;
 let wordArray = [];
@@ -87,6 +88,7 @@ function pause() {
     inputArea.setAttribute('readonly', true);
     timerText.classList.add('blur');
     wordText.classList.add('blur');
+    pauseText.classList.remove('hidden');
 }
 
 function resume() {
@@ -94,6 +96,7 @@ function resume() {
     setTimeout(readOnlyTemp, 10)
     wordText.classList.remove('blur');
     timerText.classList.remove('blur');
+    pauseText.classList.add('hidden');
 }
 
 
