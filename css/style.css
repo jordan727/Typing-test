@@ -158,6 +158,10 @@ body {
   text-shadow: 2px 2px 8px black;
 }
 
+#restartBtn {
+  opacity: 0.2;
+}
+
 .blur {
   filter: blur(4px);
   transition: filter 0.3s;

@@ -1,5 +1,4 @@
 // Functions that work with creating, comparing and styling words
-
 // Generate 100 Random Words
 function generateRandomWords() {
     wordText.textContent = null;
@@ -25,14 +24,16 @@ function splitWordString() {
 // Split input by letters
 function splitInput() {
     currentInput = inputArea.value;
+    charactersTyped++
+    clearTimeout(pauseTimer);
+    pauseTimer = setTimeout(pause, 3000);
+    errors = 0
     currentInputArray = currentInput.split('');
     wordSpanArray = wordText.querySelectorAll('span');
     wordSpanArray.forEach((char, index) => {
         let typedChar = currentInputArray[index]
         updateColours(typedChar, char)
     })
-    charactersTyped++
-    errors = 0
     // if (currentInputArray == wordArray) {
     //     wordArray = []
     //     generateRandomWords()
@@ -53,6 +54,6 @@ function updateColours(typedChar, char) {
       }  else {
         char.classList.add('incorrect');
         char.classList.remove('correct');
-        errors++;
+        errors++
       }
 }

@@ -14,48 +14,69 @@
 // When line is typed display next line
 // Only show 3 - 4 lines at a time getClientRects()
 let timerText = document.querySelector("#currTime");
-let wordText = document.querySelector("#words")
+let wordText = document.querySelector("#words");
 let inputArea = document.getElementById("inputarea");
-let pauseText = document.querySelector("#gamepause")
+let pauseText = document.querySelector("#gamepause");
+let restartBtn = document.getElementById("restartBtn")
 
 let timeLimit = 30;
+let errors = 0;
 let wordArray = [];
 let timeLeft = timeLimit;
-let errors = 0;
 let accuracy = 0;
 let wordString = "";
 let timer = null;
 let charactersTyped = 0;
+let pauseTimer = null;
+let gameStarted = false;
+let gamePaused = false;
 
 // EVENT LISTENERS
-document.addEventListener("keydown", focus);
-document.addEventListener("focusout", pause)
+document.addEventListener("keydown", focusInput);
+// try adding perameters
+document.addEventListener("focusout", delayer);
+restartBtn.addEventListener("click", retry)
 
 function typing() {
     if (wordString == "") {
-        startGame()
+        startGame();
     } else {
-        resume()
+        resume();
     }
 }
 
 function startGame() {
     reset()
-    generateRandomWords()
-    splitWordString()
+    generateRandomWords();
+    splitWordString();
+    timerText.innerHTML = timeLimit + "s"
     clearInterval(timer);
-    timer = setInterval(updateTimer, 1000)
-    setTimeout(readOnlyTemp, 10)
+    timer = setInterval(updateTimer, 1000);
+    setTimeout(readOnlyTemp, 10);
+    pauseTimer = setTimeout(pause, 3000);
+    gameStarted = true;
 }
 
 function endGame() {
     inputArea.setAttribute('readonly', true);
     clearInterval(timer);
-    console.log("game fiished");
+    // console.log("game fiished");
     let WPM = Math.round(((charactersTyped / 5) / (timeLimit / 60)));
     console.log(WPM);
-    let accuracy = Math.round((charactersTyped - errors) / charactersTyped);
-    console.log(accuracy * 100 + "%");
+    let accuracy = (Math.round((charactersTyped - errors) / charactersTyped)) * 100;
+    console.log(accuracy + "%");
+    gameStarted = false;
+
+
+    let WPMstat = document.getElementById("WPM");
+    let ACCstat = document.getElementById("accuracy");
+
+
+    WPMstat.innerHTML = WPM + " WPM";
+    WPMstat.classList.remove('hidden');
+    ACCstat.innerHTML = accuracy + "%";
+    ACCstat.classList.remove('hidden');
+
 }
 
 function updateTimer() {
@@ -69,7 +90,7 @@ function updateTimer() {
 
 function reset() {
     inputArea.disabled = false;
-    timerText.innerHTML = timeLimit + "s"
+    timerText.innerHTML = ""
     wordText.innerHTML = ""
     inputArea.value = ""
 
@@ -80,23 +101,43 @@ function reset() {
     accuracy = 0;
     wordString = "";
     timer = null;
+    pauseTimer = null;
     charactersTyped = 0;
-    }
-
-function pause() {
-    clearInterval(timer);
-    inputArea.setAttribute('readonly', true);
-    timerText.classList.add('blur');
-    wordText.classList.add('blur');
-    pauseText.classList.remove('hidden');
-}
-
-function resume() {
-    timer = setInterval(updateTimer, 1000);
-    setTimeout(readOnlyTemp, 10)
+    gamePaused = false;
+    gameStarted = false;
     wordText.classList.remove('blur');
     timerText.classList.remove('blur');
     pauseText.classList.add('hidden');
+
+    }
+
+function retry() {
+    gameStarted = false;
+    reset()
+    wordText.innerHTML = "Press any key to start"
+}
+
+function pause() {
+    if (gameStarted === true) {
+        clearInterval(timer);
+        inputArea.setAttribute('readonly', true);
+        timerText.classList.add('blur');
+        wordText.classList.add('blur');
+        pauseText.classList.remove('hidden');
+        gamePaused = true
+        inputArea.blur();
+    }
+}
+
+function resume() {
+    if (gameStarted === true && gamePaused === true) {
+        timer = setInterval(updateTimer, 1000);
+        setTimeout(readOnlyTemp, 10);
+        wordText.classList.remove('blur');
+        timerText.classList.remove('blur');
+        pauseText.classList.add('hidden');
+        gamePaused = false;
+    }
 }
 
 
@@ -106,6 +147,11 @@ function readOnlyTemp() {
 }
 
 
-function focus() {
-    inputArea.focus()
+function focusInput() {
+    inputArea.focus();
+}
+
+// Add perameteres
+function delayer() {
+    setTimeout(pause, 70);
 }

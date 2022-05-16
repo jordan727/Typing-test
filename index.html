@@ -28,12 +28,12 @@
             <div id="currTime"></div>
           </div>
           <div id="gamepause" class="hidden">
-            Click any key to resume
+            Press any key to resume
           </div>
-          <div id="WPM">
+          <div id="WPM" class="hidden">
             WPM
           </div>
-          <div id="accuracy">
+          <div id="accuracy" class="hidden">
             Acc
           </div>
         <div id="words">
@@ -42,8 +42,7 @@
         <div class="inputText">
         <textarea id="inputarea" oninput="splitInput()" onfocus="typing()" readonly></textarea>
         </div>
-        <button class="restartBtn"
-            onclick="resetValues()">
+        <button id="restartBtn">
             Restart
         </button>
     </div>
