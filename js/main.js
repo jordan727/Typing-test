@@ -21,6 +21,7 @@ let restartBtn = document.getElementById("restartBtn")
 
 let timeLimit = 30;
 let errors = 0;
+let spanWidth = []
 let wordArray = [];
 let timeLeft = timeLimit;
 let accuracy = 0;
@@ -53,7 +54,7 @@ function startGame() {
     clearInterval(timer);
     timer = setInterval(updateTimer, 1000);
     setTimeout(readOnlyTemp, 10);
-    pauseTimer = setTimeout(pause, 3000);
+    pauseTimer = setTimeout(pause, 2000);
     gameStarted = true;
 }
 
@@ -153,5 +154,5 @@ function focusInput() {
 
 // Add perameteres
 function delayer() {
-    setTimeout(pause, 70);
+    setTimeout(pause, 100);
 }

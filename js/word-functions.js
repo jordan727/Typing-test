@@ -9,6 +9,7 @@ function generateRandomWords() {
     } 
 }
 
+// Try putting each word into divs to add typing line and scroll when line of text is completed
 // Split word string by letters
 function splitWordString() {
     // Split words for css
@@ -16,17 +17,25 @@ function splitWordString() {
     // Split word string into individual letters and seperate them into span elements
     wordString.split('').forEach(char => {
         const charSpan = document.createElement('span')
+        // const charDiv = document.createElement('div')
+        // charDiv.id = "charDivide"
         charSpan.innerText = char
         wordText.appendChild(charSpan)
     })
 }
 
+// function getWordWidth() {
+//     wordString.split(' ').forEach(char => {
+//         // fix
+//         spanWidth.push(charSpan.getBoundingClientRect().width);
+//     })
+// }
 // Split input by letters
 function splitInput() {
     currentInput = inputArea.value;
     charactersTyped++
     clearTimeout(pauseTimer);
-    pauseTimer = setTimeout(pause, 3000);
+    pauseTimer = setTimeout(pause, 2000);
     errors = 0
     currentInputArray = currentInput.split('');
     wordSpanArray = wordText.querySelectorAll('span');
@@ -39,6 +48,13 @@ function splitInput() {
     //     generateRandomWords()
     // }
 }
+
+// function gridChars() {
+//     wordString.split('').forEach(char => {
+//         const charDiv = document.createElement('div')
+//         wordText.append(charDiv)
+//     })
+// }
 
 function updateColours(typedChar, char) {
     if (typedChar == null) {
