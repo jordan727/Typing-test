@@ -245,8 +245,3 @@ let wordList = [
     "year","yellow","yes","yesterday","yet","you","young","younger",
     "your","yourself","youth","zero","zebra","zipper","zoo","zulu"
   ];
-
-  // Return a random word from word list
-  function randomWord() {
-    return wordList[randomInt(0, wordList.length)];
-  }

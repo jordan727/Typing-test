@@ -1,25 +1,19 @@
-// Typing Test
+// Typing Speed Test by Jordan Antonio
 
-// array of random words
-// user types out words in a certain time period
-// calculate wpm
-// https://www.geeksforgeeks.org/design-a-typing-speed-test-game-using-javascript/ (color typing stuff)
-//Show only a certain number of random words, generate new line of random words after line finishes
-// Random words used
-// Add line that shows where you are typing
-// Spaces go to next word
-// backspace does not work if you correctly typed the word
-// When mistyping text on spaces show extra letters that user typed
-// underline mistyped words
-// When line is typed display next line
-// Only show 3 - 4 lines at a time getClientRects()
+// https://www.geeksforgeeks.org/design-a-typing-speed-test-game-using-javascript/
+
+
+// HTML Elements
 let timerText = document.querySelector("#currTime");
 let wordText = document.querySelector("#words");
 let inputArea = document.getElementById("inputarea");
 let pauseText = document.querySelector("#gamepause");
 let restartBtn = document.getElementById("restartBtn")
+let WPMstat = document.getElementById("WPM");
+let ACCstat = document.getElementById("accuracy");
 
-let timeLimit = 30;
+// Global Variables
+let timeLimit = 15;
 let errors = 0;
 let spanWidth = []
 let wordArray = [];
@@ -29,57 +23,49 @@ let wordString = "";
 let timer = null;
 let charactersTyped = 0;
 let pauseTimer = null;
+let delayTimer = null;
 let gameStarted = false;
 let gamePaused = false;
 
 // EVENT LISTENERS
 document.addEventListener("keydown", focusInput);
-// try adding perameters
-document.addEventListener("focusout", delayer);
 restartBtn.addEventListener("click", retry)
 
-function typing() {
-    if (wordString == "") {
-        startGame();
-    } else {
-        resume();
-    }
-}
-
+// Start Game
 function startGame() {
     reset()
     generateRandomWords();
     splitWordString();
+    restartBtn.classList.remove('hidden');
     timerText.innerHTML = timeLimit + "s"
     clearInterval(timer);
     timer = setInterval(updateTimer, 1000);
-    setTimeout(readOnlyTemp, 10);
+    setTimeout(readOnlyDelay, 10);
     pauseTimer = setTimeout(pause, 2000);
     gameStarted = true;
 }
 
+// End Game
 function endGame() {
     inputArea.setAttribute('readonly', true);
     clearInterval(timer);
-    // console.log("game fiished");
     let WPM = Math.round(((charactersTyped / 5) / (timeLimit / 60)));
     console.log(WPM);
-    let accuracy = (Math.round((charactersTyped - errors) / charactersTyped)) * 100;
+    let accuracy = Math.round((charactersTyped - errors) / charactersTyped);
+    console.log(errors)
     console.log(accuracy + "%");
     gameStarted = false;
 
-
-    let WPMstat = document.getElementById("WPM");
-    let ACCstat = document.getElementById("accuracy");
-
-
     WPMstat.innerHTML = WPM + " WPM";
     WPMstat.classList.remove('hidden');
-    ACCstat.innerHTML = accuracy + "%";
+    ACCstat.innerHTML = accuracy * 100 + "%";
     ACCstat.classList.remove('hidden');
+    timerText.classList.add('blur');
+    wordText.classList.add('blur');
 
 }
 
+// Update the visible timer
 function updateTimer() {
     if (timeLeft > 0) {
         timeLeft--;
@@ -89,35 +75,44 @@ function updateTimer() {
     }
 }
 
+// Reset all variables, timers and classes to original state
 function reset() {
     inputArea.disabled = false;
     timerText.innerHTML = ""
     wordText.innerHTML = ""
     inputArea.value = ""
-
-    timeLimit = 30;
+    clearTimeout(pauseTimer);
+    clearInterval(timer);
+    timeLimit = 5;
     wordArray = [];
     timeLeft = timeLimit;
     errors = 0;
     accuracy = 0;
     wordString = "";
     timer = null;
+    delayTimer = null;
     pauseTimer = null;
     charactersTyped = 0;
     gamePaused = false;
     gameStarted = false;
+    WPMstat.classList.add('hidden');
+    ACCstat.classList.add('hidden');
     wordText.classList.remove('blur');
     timerText.classList.remove('blur');
     pauseText.classList.add('hidden');
-
     }
 
+// Restart Game
 function retry() {
     gameStarted = false;
     reset()
     wordText.innerHTML = "Press any key to start"
+    restartBtn.blur();
+    inputArea.setAttribute('readonly', true);
+    restartBtn.classList.add('hidden');
 }
 
+// Pause Game
 function pause() {
     if (gameStarted === true) {
         clearInterval(timer);
@@ -130,10 +125,11 @@ function pause() {
     }
 }
 
+// Resume Game
 function resume() {
     if (gameStarted === true && gamePaused === true) {
         timer = setInterval(updateTimer, 1000);
-        setTimeout(readOnlyTemp, 10);
+        setTimeout(readOnlyDelay, 10);
         wordText.classList.remove('blur');
         timerText.classList.remove('blur');
         pauseText.classList.add('hidden');
@@ -141,18 +137,21 @@ function resume() {
     }
 }
 
-
-// Change name of function
-function readOnlyTemp() {
+// Delay Input Area read only
+function readOnlyDelay() {
     inputArea.removeAttribute('readonly');
 }
 
-
-function focusInput() {
-    inputArea.focus();
+// When Inputarea is hovered, check if a word string is present and either start game or resume game
+function typing() {
+    if (wordString == "") {
+        startGame();
+    } else {
+        resume();
+    }
 }
 
-// Add perameteres
-function delayer() {
-    setTimeout(pause, 100);
+// Focus the input area
+function focusInput() {
+    inputArea.focus();
 }

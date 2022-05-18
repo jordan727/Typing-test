@@ -1,4 +1,5 @@
 // Functions that work with creating, comparing and styling words
+
 // Generate 100 Random Words
 function generateRandomWords() {
     wordText.textContent = null;
@@ -9,7 +10,11 @@ function generateRandomWords() {
     } 
 }
 
-// Try putting each word into divs to add typing line and scroll when line of text is completed
+  // Return a random word from word list
+  function randomWord() {
+    return wordList[randomInt(0, wordList.length)];
+  }
+  
 // Split word string by letters
 function splitWordString() {
     // Split words for css
@@ -17,19 +22,11 @@ function splitWordString() {
     // Split word string into individual letters and seperate them into span elements
     wordString.split('').forEach(char => {
         const charSpan = document.createElement('span')
-        // const charDiv = document.createElement('div')
-        // charDiv.id = "charDivide"
         charSpan.innerText = char
         wordText.appendChild(charSpan)
     })
 }
 
-// function getWordWidth() {
-//     wordString.split(' ').forEach(char => {
-//         // fix
-//         spanWidth.push(charSpan.getBoundingClientRect().width);
-//     })
-// }
 // Split input by letters
 function splitInput() {
     currentInput = inputArea.value;
@@ -43,19 +40,9 @@ function splitInput() {
         let typedChar = currentInputArray[index]
         updateColours(typedChar, char)
     })
-    // if (currentInputArray == wordArray) {
-    //     wordArray = []
-    //     generateRandomWords()
-    // }
 }
 
-// function gridChars() {
-//     wordString.split('').forEach(char => {
-//         const charDiv = document.createElement('div')
-//         wordText.append(charDiv)
-//     })
-// }
-
+// Update classes
 function updateColours(typedChar, char) {
     if (typedChar == null) {
         char.classList.remove('correct');
