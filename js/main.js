@@ -13,15 +13,14 @@ let WPMstat = document.getElementById("WPM");
 let ACCstat = document.getElementById("accuracy");
 
 // Global Variables
-let timeLimit = 15;
+let timeLimit = 30;
 let errors = 0;
-let spanWidth = []
 let wordArray = [];
 let timeLeft = timeLimit;
 let accuracy = 0;
 let wordString = "";
-let timer = null;
 let charactersTyped = 0;
+let timer = null;
 let pauseTimer = null;
 let delayTimer = null;
 let gameStarted = false;
@@ -51,14 +50,14 @@ function endGame() {
     clearInterval(timer);
     let WPM = Math.round(((charactersTyped / 5) / (timeLimit / 60)));
     console.log(WPM);
-    let accuracy = Math.round((charactersTyped - errors) / charactersTyped);
+    let accuracy = Math.round(((charactersTyped - errors) / charactersTyped) * 100);
     console.log(errors)
     console.log(accuracy + "%");
     gameStarted = false;
 
     WPMstat.innerHTML = WPM + " WPM";
     WPMstat.classList.remove('hidden');
-    ACCstat.innerHTML = accuracy * 100 + "%";
+    ACCstat.innerHTML = accuracy + "%";
     ACCstat.classList.remove('hidden');
     timerText.classList.add('blur');
     wordText.classList.add('blur');
@@ -83,7 +82,7 @@ function reset() {
     inputArea.value = ""
     clearTimeout(pauseTimer);
     clearInterval(timer);
-    timeLimit = 5;
+    timeLimit = 30;
     wordArray = [];
     timeLeft = timeLimit;
     errors = 0;
