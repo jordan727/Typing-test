@@ -1,8 +1,5 @@
 // Typing Speed Test by Jordan Antonio
 
-// https://www.geeksforgeeks.org/design-a-typing-speed-test-game-using-javascript/
-
-
 // HTML Elements
 let timerText = document.querySelector("#currTime");
 let wordText = document.querySelector("#words");
