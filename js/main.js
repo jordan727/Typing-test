@@ -25,11 +25,11 @@ let gamePaused = false;
 
 // EVENT LISTENERS
 document.addEventListener("keydown", focusInput);
-restartBtn.addEventListener("click", retry)
+restartBtn.addEventListener("click", retry);
 
 // Start Game
 function startGame() {
-    reset()
+    reset();
     generateRandomWords();
     splitWordString();
     restartBtn.classList.remove('hidden');
@@ -58,7 +58,6 @@ function endGame() {
     ACCstat.classList.remove('hidden');
     timerText.classList.add('blur');
     wordText.classList.add('blur');
-
 }
 
 // Update the visible timer
@@ -74,9 +73,9 @@ function updateTimer() {
 // Reset all variables, timers and classes to original state
 function reset() {
     inputArea.disabled = false;
-    timerText.innerHTML = ""
-    wordText.innerHTML = ""
-    inputArea.value = ""
+    timerText.innerHTML = "";
+    wordText.innerHTML = "";
+    inputArea.value = "";
     clearTimeout(pauseTimer);
     clearInterval(timer);
     timeLimit = 30;
@@ -101,8 +100,8 @@ function reset() {
 // Restart Game
 function retry() {
     gameStarted = false;
-    reset()
-    wordText.innerHTML = "Press any key to start"
+    reset();
+    wordText.innerHTML = "Press any key to start";
     restartBtn.blur();
     inputArea.setAttribute('readonly', true);
     restartBtn.classList.add('hidden');
@@ -116,7 +115,7 @@ function pause() {
         timerText.classList.add('blur');
         wordText.classList.add('blur');
         pauseText.classList.remove('hidden');
-        gamePaused = true
+        gamePaused = true;
         inputArea.blur();
     }
 }

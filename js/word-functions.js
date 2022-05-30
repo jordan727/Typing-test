@@ -10,10 +10,10 @@ function generateRandomWords() {
     } 
 }
 
-  // Return a random word from word list
-  function randomWord() {
-    return wordList[randomInt(0, wordList.length)];
-  }
+// Return a random word from word list
+function randomWord() {
+  return wordList[randomInt(0, wordList.length)];
+}
   
 // Split word string by letters
 function splitWordString() {
